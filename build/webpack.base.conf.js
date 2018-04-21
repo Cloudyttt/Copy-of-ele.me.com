@@ -77,6 +77,11 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath("fonts/[name].[hash:7].[ext]")
         }
+      },
+      // font-awesome
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)\w*/,
+        loader: "file-loader?publicPath=/static/res/&outputPath=font/"
       }
     ]
   },
