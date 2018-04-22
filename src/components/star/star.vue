@@ -25,7 +25,6 @@ export default {
     computed: {
         starType() {
             return 'star-' + this.size;
-            console.log('star-' + this.size);
         },
         itemClasses() {
             let result = [];

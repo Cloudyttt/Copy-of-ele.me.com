@@ -19,7 +19,9 @@
           {{seller.description}}/{{seller.deliveryTime}}分钟送达
         </div>
         <div v-if="seller.supports" class="supports">
-          <span id="icon" v-bind:class="classMap[seller.supports[0].type]">   </span>
+
+          <!-- <span id="icon" v-bind:class="classMap[seller.supports[0].type]"></span> -->
+          <icon v-bind:iconSize="12" v-bind:supportsType="seller.supports[0].type"></icon>
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
         <div v-if="seller.supports" class="supports-count" v-on:click="showDetail">
@@ -53,7 +55,7 @@
 
             <ul v-if="seller.supports" class="detail-main-supports">
               <li class="support-item" v-for="(item, index) in seller.supports">
-                <span class="detail-main-icon" v-bind:class="classMap[seller.supports[index].type]"></span>
+                <icon v-bind:iconSize="16" v-bind:supportsType="seller.supports[index].type"></icon>
                 <span class="supports-text">{{seller.supports[index].description}}</span>
               </li>
             </ul>
@@ -78,7 +80,8 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-  import star from '../star/star';
+  import star from '../star/star.vue';
+  import icon from '../icon/icon.vue';
   export default{
     data () {
       return {
@@ -90,9 +93,9 @@
         type: Object
       }
     },
-    created() {
-      this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
-    },
+    // created() {
+    //   this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+    // },
     methods: {
       showDetail() {
         this.detailShow = true;
@@ -102,7 +105,8 @@
       }
     },
     components: {
-      "star": star
+      "star": star,
+      "icon": icon
     }
   };
 </script>
@@ -148,18 +152,21 @@
     display: flex;
     align-items: center;
   }
-  #icon{
+  /* #icon{
     display: inline-block;
     width: 12px;
     height: 12px;
     background-size: 12px 12px;
     background-repeat: no-repeat;
     margin-right: 4px;
-  }
+  } */
   #avatar-img{
     border-radius: 2px 2px 2px 2px;
   }
-  .decrease{
+  .supports .text{
+    display: inline-block;
+  }
+  /* .decrease{
     background-image: url(decrease_1@2x.png);
   }
   .discount{
@@ -173,7 +180,7 @@
   }
   .guarantee{
     background-image: url(guarantee_1@2x.png);
-  }
+  } */
   .supports-count{
     cursor: pointer;
     display: flex;
@@ -287,14 +294,14 @@
     font-size: 14px;
     font-weight: 700;
   }
-  .detail-main-icon{
+  /* .detail-main-icon{
     display: inline-block;
     width: 16px;
     height: 16px;
     background-size: 16px 16px;
     background-repeat: no-repeat;
     margin-right: 6px;
-  }
+  } */
   .detail-main-supports{
     width: 80%;
     margin: 0 auto;

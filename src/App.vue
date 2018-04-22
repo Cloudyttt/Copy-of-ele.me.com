@@ -28,13 +28,11 @@ export default{
       seller: {}
     }
   },
-  created:function() {
+  created: function() {
     this.$axios.get("/api/seller",{"id":123})
     .then(res=>{
       this.seller = res.data.data;
-      console.log(this.seller);
-      console.log(this.seller.supports.length);
-      
+      console.log('this.seller: ' + this.seller);
     })
     .catch(function (error) {
       console.log(error);
@@ -42,7 +40,7 @@ export default{
   },
   components: {
     name: 'App',
-    'v-header' : header
+    'v-header': header,
   },
 }
 </script>
