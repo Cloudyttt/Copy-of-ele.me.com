@@ -16,7 +16,7 @@
         <router-link active-class="active-style" to="/seller">商家</router-link>
       </div>
     </div>
-    <router-view></router-view>
+    <router-view v-bind:seller="seller"></router-view>
   </div>
 </template>
 

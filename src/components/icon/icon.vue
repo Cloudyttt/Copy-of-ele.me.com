@@ -20,7 +20,7 @@ export default {
   },
   computed: {
       setSize() {
-          console.log('图标尺寸类型：' + 'size-' + this.iconSize)
+          // console.log('图标尺寸类型：' + 'size-' + this.iconSize)
           return 'size-' + this.iconSize;
       }
   }

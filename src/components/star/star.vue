@@ -102,7 +102,7 @@ export default {
 
 }
 .star-24 .star-item{
-        height: 10px;
+    height: 10px;
     width: 10px;
     margin-right: 3px;
     background-size: 10px 10px;

@@ -32,6 +32,9 @@
                   <span class="now-price">￥{{food.price}}</span>
                   <span class="old-price" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
+                <div class="cartcontrol-wrapper">
+                  <cartcontrol v-bind:food="food"></cartcontrol>
+                </div>
               </div>
             </li>
           </ul>
@@ -39,14 +42,15 @@
       </ul>
     </div>
     <!-- 底部购物车 -->
-    <shopcart></shopcart>
+    <shopcart v-bind:delivery-price="seller.deliveryPrice" v-bind:min-price="seller.minPrice" v-bind:select-foods="selectFoods"></shopcart>
   </div> 
 </template>
 <script type="text/ecmascript-6">
 import star from "../star/star.vue";
 import icon from "../icon/icon.vue";
 import BScroll from "better-scroll";
-import shopcart from '../shopcart/shopcart'
+import shopcart from "../shopcart/shopcart";
+import cartcontrol from "../cartcontrol/cartcontrol";
 export default {
   props: {
     seller: {
@@ -79,7 +83,8 @@ export default {
   components: {
     star: star,
     icon: icon,
-    shopcart: shopcart
+    shopcart: shopcart,
+    cartcontrol: cartcontrol
   },
   methods: {
     // 初始化betterScroll
@@ -88,6 +93,7 @@ export default {
         click: true
       });
       this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
+        click: true,
         probeType: 3 //scroll滚动时实时返回当前滚动位置
       });
       this.foodsScroll.on("scroll", pos => {
@@ -116,7 +122,7 @@ export default {
         "item-list-hook"
       );
       let el = itemList[index];
-      this.foodsScroll.scrollToElement(el, 500);
+      this.foodsScroll.scrollToElement(el, 300);
       console.log(index);
     }
   },
@@ -134,6 +140,17 @@ export default {
         }
       }
       return 0;
+    },
+    selectFoods() {
+      let foods = [];
+      this.goods.forEach((good) => {
+        good.foods.forEach((food) => {
+          if(food.count) {
+            foods.push(food);
+          }
+        });
+      });
+      return foods;
     }
   }
 };
@@ -176,7 +193,7 @@ span {
   font-size: 12px;
   vertical-align: middle;
   width: 56px;
-  border-bottom: 1px solid rgba(7, 17, 27, 0.1);
+  /* border-bottom: 1px solid rgba(7, 17, 27, 0.1); */
 }
 .goods-icon {
   display: inline;
@@ -213,6 +230,7 @@ ol {
   margin-right: 10px;
 }
 .food-list .food-content {
+  position: relative;
   flex: 1;
 }
 .food-list .food-name {
@@ -261,5 +279,10 @@ ol {
 }
 .current .item-name {
   border: none;
+}
+.cartcontrol-wrapper {
+  position: absolute;
+  right: 18px;
+  bottom: 0px;
 }
 </style>
