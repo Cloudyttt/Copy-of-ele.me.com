@@ -38,6 +38,9 @@
                 <div class="pay" v-bind:class="{'enough': totalPrice>=minPrice}" v-on:click="pay">{{payDesc}}</div>
             </div>
         </div>
+        <transition name="mask-fade">
+          <div class="list-mask" v-show="listShow" v-on:click="hideListMask"></div>
+        </transition>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -130,11 +133,14 @@ export default {
         food.count = 0;
       });
     },
-    pay(){
-      if(this.totalPrice < this.minPrice){
+    pay() {
+      if (this.totalPrice < this.minPrice) {
         return;
       }
-      window.alert('支付'+ this.totalPrice + '元');
+      window.alert("支付" + this.totalPrice + "元");
+    },
+    hideListMask(){
+      this.fold = true;
     }
   }
 };
@@ -301,19 +307,22 @@ h6 {
 /* .fold-leave, .fold-enter-to{
   transform: translate3d(0, -100%, 0);
 } */
-.fold-enter-to, .fold-leave{
+.fold-enter-to,
+.fold-leave {
   transform: translate3d(0, 0, 0);
 }
-.showstyle{
+.showstyle {
   transform: translate3d(0, -100%, 0);
   transition: all 0.5s ease;
 }
 
 /* 购物车详情列表增减过渡动画 */
-.list-change-enter-active, .list-change-leave-active {
+.list-change-enter-active,
+.list-change-leave-active {
   transition: all 0.3s;
 }
-.list-change-enter, .list-change-leave-to {
+.list-change-enter,
+.list-change-leave-to {
   opacity: 0;
   transform: translateY(30px);
 }
@@ -351,4 +360,24 @@ h6 {
   line-height: 24px;
   color: rgb(7, 17, 27);
 }
+
+/* 购物车详情列表展开时背景虚化效果 */
+.list-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -40;
+  width: 100%;
+  height: 100%;
+  -webkit-backdrop-filter: blur(100px);
+  background-color: rgba(7, 17, 27, 0.6);
+}
+  .mask-fade-enter-active, .mask-fade-leave-active{
+    opacity: 1;
+    transition: all .3s ease;
+  }
+  .mask-fade-leave-to, .mask-fade-enter{
+    opacity: 0;
+    background: rgba(7, 17, 27, 0);
+  }
 </style>
