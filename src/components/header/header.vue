@@ -324,22 +324,19 @@
     margin: 0 auto;
   }
 
-  /* 可以设置不同的进入和离开动画 */
-  /* 设置持续时间和动画函数 */
+/* 显示商家详情设置全局模糊效果 */
   .slide-fade-enter-active {
     transition: all .3s ease;
   }
   .slide-fade-leave-active {
     transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
-  .slide-fade-leave-to
-  /* .slide-fade-leave-active for below version 2.1.8 */ {
-    transform: translateY(-200px);
+  .slide-fade-leave-to{
+    transform: translate3d(0, -100%, 0);
     opacity: 0;
   }
-  .slide-fade-enter
-  /* .slide-fade-leave-active for below version 2.1.8 */ {
-    transform: translateX(100px);
+  .slide-fade-enter{
+    transform: translate3d(100%, 0, 0);
     opacity: 0;
   }
 </style>
