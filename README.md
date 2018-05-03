@@ -1,6 +1,6 @@
 # myvue
 
-> A Vue.js project
+> Vue.js高仿饿了商家页面
 
 ## Build Setup
 

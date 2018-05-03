@@ -1,22 +1,24 @@
 <template>
     <div class="shopcart">
-        <transition name="slide-toggle">
-          <div class="shopcart-list" v-show="listShow">
+        <transition name="fold">
+          <div class="shopcart-list" v-show="listShow" v-bind:class="{'showstyle': listShow}">
             <div class="list-header">
               <h1 class="title">购物车</h1>
               <span class="empty" v-on:click="empty">清空</span>
             </div>
             <div class="list-content" ref="listContent">
               <ul>
-                <li class="list-food" v-for="food in selectFoods">
-                  <span class="food-name">{{food.name}}</span>
-                  <div class="price">
-                    <span>￥{{food.price * food.count}}</span>
-                  </div>
-                  <div class="cartcontrol-wrapper">
-                    <cartcontrol v-bind:food="food"></cartcontrol>
-                  </div>
-                </li>
+                <transition-group name="list-change" tag="p">
+                  <li class="list-food" v-for="food in selectFoods" v-bind:key="food.name">
+                    <span class="food-name">{{food.name}}</span>
+                    <div class="price">
+                      <span>￥{{food.price * food.count}}</span>
+                    </div>
+                    <div class="cartcontrol-wrapper">
+                      <cartcontrol v-bind:food="food"></cartcontrol>
+                    </div>
+                  </li>
+                </transition-group>
               </ul>
             </div>
           </div>
@@ -33,7 +35,7 @@
                 <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
             </div>
             <div class="content-right">
-                <div class="pay" v-bind:class="{'enough': totalPrice>=minPrice}">{{payDesc}}</div>
+                <div class="pay" v-bind:class="{'enough': totalPrice>=minPrice}" v-on:click="pay">{{payDesc}}</div>
             </div>
         </div>
     </div>
@@ -127,6 +129,12 @@ export default {
       this.selectFoods.forEach(food => {
         food.count = 0;
       });
+    },
+    pay(){
+      if(this.totalPrice < this.minPrice){
+        return;
+      }
+      window.alert('支付'+ this.totalPrice + '元');
     }
   }
 };
@@ -139,7 +147,12 @@ ol {
   margin: 0;
   padding: 0;
 }
-h1,h2,h3,h4,h5,h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
   padding: 0;
 }
@@ -279,20 +292,30 @@ h1,h2,h3,h4,h5,h6{
   color: rgb(0, 160, 220);
 }
 /* 底部购物车信息栏过渡效果 */
-.slide-toggle-enter-active {
+.fold-enter-active {
   transition: all 0.5s ease;
-  transform: translate3d(0, -100%, 0);
 }
-.slide-toggle-leave-active {
-  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
-  transform: translate3d(0, -100%, 0);
+.fold-leave-active {
+  transition: all 0.3s ease;
 }
-.slide-toggle-leave-to,
-.slide-toggle-enter {
+/* .fold-leave, .fold-enter-to{
   transform: translate3d(0, -100%, 0);
+} */
+.fold-enter-to, .fold-leave{
+  transform: translate3d(0, 0, 0);
 }
-.slide-toggle-enter-to, .slide-toggle-leave{
+.showstyle{
   transform: translate3d(0, -100%, 0);
+  transition: all 0.5s ease;
+}
+
+/* 购物车详情列表增减过渡动画 */
+.list-change-enter-active, .list-change-leave-active {
+  transition: all 0.3s;
+}
+.list-change-enter, .list-change-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
 }
 
 .shopcart-list .list-content {
