@@ -32,7 +32,9 @@ export default {
     },
     decreaseCart() {
       console.log("Click the decrease button!");
-      this.food.count--;
+      if (this.food.count != 0) {
+        this.food.count--;
+      }
     }
   }
 };
@@ -77,16 +79,21 @@ export default {
 
 /* Vue动画效果 */
 .move-enter-active {
-  transition: all .5s ease;
+  transition: all 0.5s ease;
   /* animation: move-in 0.5s; */
   /* -webkit-animation: move-in 0.5s; 兼容Safari 与 Chrome */
 }
 .move-leave-active {
-  transition: all .5s ease;
+  transition: all 0.5s ease;
   /* animation: move-in 0.5s reverse; */
   /* -webkit-animation: move-in 0.5s reverse; 兼容Safari 与 Chrome */
 }
-.move-enter, .move-leave-to {
+.move-enter{
+  transform: translate3D(48px, 0, 0);
+  /* transform: rotate(-180deg); */
+  opacity: 0;
+}
+.move-leave-to {
   transform: translate3D(48px, 0, 0);
   /* transform: rotate(-180deg); */
   opacity: 0;
