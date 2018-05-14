@@ -1,12 +1,12 @@
 <template>
-  <div class="header">
-    我是seller
-
+  <div class="order">
+    我是【订单】界面
   </div>
 </template>
 <script type="text/ecmascript-6">
   export default{};
 </script>
 
-<style type="text/css">
+<style scoped lang="stylus" rel="stylesheet/stylus">
+
 </style>

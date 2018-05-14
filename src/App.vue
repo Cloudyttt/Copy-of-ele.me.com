@@ -1,31 +1,40 @@
 <template>
   <div id="app">
-    <v-header v-bind:seller="seller">
-    </v-header>
     <div class="tap">
+        <!-- 使用 router-link 组件来导航.
+        通过传入 `to` 属性指定链接.
+        <router-link> 默认会被渲染成一个 `<a>` 标签 -->
       <div class="tap-item col-sm-4">
-        <!-- 使用 router-link 组件来导航. -->
-        <!-- 通过传入 `to` 属性指定链接. -->
-        <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
-        <router-link active-class="active-style" to="/goods">商品</router-link>
+        <div tap-temp>
+          <!-- <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-changyonglogo40"></use>
+          </svg> -->
+          <router-link active-class="active-style" to="/takeaway">外卖</router-link>
+        </div>
       </div>
       <div class="tap-item col-sm-4">
-        <router-link active-class="active-style" to="/ratings">评价</router-link>
+        <router-link active-class="active-style" to="/discover">发现</router-link>
       </div>
       <div class="tap-item col-sm-4">
-        <router-link active-class="active-style" to="/seller">商家</router-link>
+        <router-link active-class="active-style" to="/order">订单</router-link>
+      </div>
+      <div class="tap-item col-sm-4">
+        <router-link active-class="active-style" to="/user">我的</router-link>
       </div>
     </div>
-    <router-view v-bind:seller="seller"></router-view>
+    <router-view v-bind:store="store"></router-view>
   </div>
 </template>
 
 <script>
-import header from './components/header/header.vue'
+// import header from './components/header/header.vue'
+import store from './components/store/store.vue'
 export default{
   data () {
     return {
-      seller: {}
+      seller: {},
+      store: {},
+      takeaway: {}
     }
   },
   created: function() {
@@ -40,19 +49,37 @@ export default{
   },
   components: {
     name: 'App',
-    'v-header': header,
+    // 'v-header': header,
+    'v-store': store,
   },
 }
 </script>
 
 <style>
+  a{
+    color: rgb(147, 153, 159);
+  }
+  a,img,span{
+    margin: 0;
+    padding: 0;
+  }
+  .icon {
+   width: 1em; height: 1em;
+   vertical-align: -0.15em;
+   fill: currentColor;
+   overflow: hidden;
+  }
   .tap{
+    position: fixed;
+    bottom: 0;
     display: flex;
     width: 100%;
-    height: 40px;
-    line-height: 40px;
+    height: 57px;
+    line-height: 57px;
     justify-content: space-around;
-    border-bottom: 1px solid rgba(7, 17, 27, 0.1)
+    background-color: f3f5f7;
+    box-shadow:0px -2px 5px #cccccc;
+    -webkit-box-shadow:0px -2px 5px #cccccc;
   }
   .tap-item{
     text-align: center;
@@ -61,14 +88,16 @@ export default{
   .tap-item a{
     text-decoration: none;
   }
-
-  /* .tap-item a:focus{
-    color: red;
-    font-weight: 2;
-  } */
-
   .active-style{
-    color: red !important;
+    color: rgb(0, 160, 220) !important;
     font-weight:bold;
   }
+  .tap-temp{
+    display: flex;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
 </style>
