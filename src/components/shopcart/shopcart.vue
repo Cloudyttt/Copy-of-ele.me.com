@@ -165,7 +165,7 @@ h6 {
 .shopcart {
   position: fixed;
   left: 0;
-  bottom: 0;
+  bottom: 48px;/*此处待项目完成后应该删除*/
   z-index: 50;
   width: 100%;
   height: 48px;

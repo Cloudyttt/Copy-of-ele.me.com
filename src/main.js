@@ -6,6 +6,14 @@ import Router from './router';
 import VueRouter from "vue-router";
 import "./assets/css/bootstrap.min.css";
 import "./assets/js/bootstrap.min.js";
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
+
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
+Vue.use(MintUI);
+
 import "./assets/js/iconfont.js";
 import goods from './components/goods/goods.vue'
 import ratings from './components/ratings/ratings.vue'
@@ -15,44 +23,34 @@ import takeaway from './components/takeaway/takeaway.vue'
 import discover from './components/discover/discover.vue'
 import order from './components/order/order.vue'
 import user from './components/user/user.vue'
-
 import store from './components/store/store.vue'
 
 import axios from "axios";
-Vue.config.productionTip = false
 
+Vue.config.productionTip = false
 Vue.use(VueRouter);
 Vue.prototype.$axios = axios;
 
 // 1. 定义（路由）组件。
 // 2. 定义路由
 // 每个路由应该映射一个组件。
-const routes = [
-  {
+const routes = [{
     path: "/takeaway",
     component: takeaway,
-    children: [
-      {
-        path: "/store",
-        component: store,
-        children:[
-          {
-            path: "/goods",
-            component: goods
-          }, {
-            path: "/ratings",
-            component: ratings
-          }, {
-            path: "/seller",
-            component: seller,
-          }
-        ]
-      }
-    ]
   },
   {
-    path: "/discover",
-    component: discover,
+    path: "/store",
+    component: store,
+    children: [{
+      path: "/goods",
+      component: goods
+    }, {
+      path: "/ratings",
+      component: ratings
+    }, {
+      path: "/seller",
+      component: seller,
+    }]
   },
   {
     path: "/order",
@@ -76,7 +74,10 @@ const app = new Vue({
 
 new Vue({
   el: "#app",
+  render: h => h(App),
   router,
-  components: { App },
+  components: {
+    App
+  },
   template: "<App/>"
 });

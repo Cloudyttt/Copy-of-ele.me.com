@@ -1,25 +1,48 @@
 <template>
   <div id="app">
-    <div class="tap">
+    <div class="tab">
         <!-- 使用 router-link 组件来导航.
         通过传入 `to` 属性指定链接.
         <router-link> 默认会被渲染成一个 `<a>` 标签 -->
-      <div class="tap-item col-sm-4">
-        <div tap-temp>
-          <!-- <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-changyonglogo40"></use>
-          </svg> -->
-          <router-link active-class="active-style" to="/takeaway">外卖</router-link>
-        </div>
+      <div class="tab-item col-sm-3">
+        <router-link active-class="active-style" to="/takeaway">
+          <div class="tab-route">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-changyonglogo40"></use>
+            </svg>
+            <span class="tab-title">外卖</span>
+          </div>
+        </router-link>
       </div>
-      <div class="tap-item col-sm-4">
-        <router-link active-class="active-style" to="/discover">发现</router-link>
+      <div class="tab-item col-sm-3">
+        <router-link active-class="active-style" to="/store">
+          <div class="tab-route" >
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-faxian"></use>
+            </svg>
+            <span class="tab-title">发现</span>
+          </div>
+        </router-link>
       </div>
-      <div class="tap-item col-sm-4">
-        <router-link active-class="active-style" to="/order">订单</router-link>
+      <div class="tab-item col-sm-3">
+        <router-link active-class="active-style" to="/order">
+          <div class="tab-route">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-dingdan"></use>
+            </svg>
+            <span class="tab-title">订单</span>
+          </div>
+        </router-link>
       </div>
-      <div class="tap-item col-sm-4">
-        <router-link active-class="active-style" to="/user">我的</router-link>
+      <div class="tab-item col-sm-3">
+        <router-link active-class="active-style" to="/user">
+          <div class="tab-route">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-weibiaoti2fuzhi12"></use>
+            </svg>
+            <span class="tab-title">我的</span>
+          </div>
+        </router-link>
       </div>
     </div>
     <router-view v-bind:store="store"></router-view>
@@ -28,76 +51,88 @@
 
 <script>
 // import header from './components/header/header.vue'
-import store from './components/store/store.vue'
-export default{
-  data () {
+import store from "./components/store/store.vue";
+export default {
+  data() {
     return {
       seller: {},
       store: {},
       takeaway: {}
-    }
+    };
   },
   created: function() {
-    this.$axios.get("/api/seller",{"id":123})
-    .then(res=>{
-      this.seller = res.data.data;
-      console.log('this.seller: ' + this.seller);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    this.$axios
+      .get("/api/seller", { id: 123 })
+      .then(res => {
+        this.seller = res.data.data;
+        console.log("this.seller: " + this.seller);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   },
   components: {
-    name: 'App',
+    name: "App",
     // 'v-header': header,
-    'v-store': store,
-  },
-}
+    "v-store": store
+  }
+};
 </script>
 
-<style>
-  a{
-    color: rgb(147, 153, 159);
-  }
-  a,img,span{
-    margin: 0;
-    padding: 0;
-  }
-  .icon {
-   width: 1em; height: 1em;
-   vertical-align: -0.15em;
-   fill: currentColor;
-   overflow: hidden;
-  }
-  .tap{
-    position: fixed;
-    bottom: 0;
-    display: flex;
-    width: 100%;
-    height: 57px;
-    line-height: 57px;
-    justify-content: space-around;
-    background-color: f3f5f7;
-    box-shadow:0px -2px 5px #cccccc;
-    -webkit-box-shadow:0px -2px 5px #cccccc;
-  }
-  .tap-item{
+<style scoped lang="stylus" rel="stylesheet/stylus">
+a {
+  color: rgb(147, 153, 159);
+  text-decoration: none;
+}
+
+span, p, a, img, span {
+  margin: 0;
+  padding: 0;
+}
+
+.tab {
+  z-index: 999;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  height: 48px;
+  line-height: 48px;
+  justify-content: space-around;
+  box-shadow: 0px -1px 3px #dddddd;
+  -webkit-box-shadow: 0px -1px 3px #dddddd;
+
+  .tab-item {
     text-align: center;
     display: block;
-  }
-  .tap-item a{
-    text-decoration: none;
-  }
-  .active-style{
-    color: rgb(0, 160, 220) !important;
-    font-weight:bold;
-  }
-  .tap-temp{
-    display: flex;
-    padding: 0;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
 
+    .tab-route {
+      text-align: center;
+
+      .tab-title {
+        display: block;
+      }
+
+      .icon {
+        display: inline-block;
+        width: 1.8em;
+        height: 1.8em;
+        vertical-align: -0.15em;
+        fill: rgb(147, 153, 159);
+        /* overflow: hidden; */
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .active-style {
+      color: rgb(0, 160, 220) !important;
+      font-weight: bold;
+
+      .icon {
+        fill: rgb(0, 160, 220) !important;
+      }
+    }
+  }
+}
 </style>
