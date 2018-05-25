@@ -31,7 +31,7 @@ export default {
       .get("/api/seller", { id: 123 })
       .then(res => {
         this.seller = res.data.data;
-        console.log("this.seller: " + this.seller);
+        // console.log("this.seller: " + this.seller);
       })
       .catch(function(error) {
         console.log(error);
