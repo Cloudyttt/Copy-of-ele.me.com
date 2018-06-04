@@ -98,8 +98,10 @@ export default {
       });
       this.foodsScroll.on("scroll", pos => {
         this.scrollY = Math.abs(Math.round(pos.y));
+        // console.log('this.scrollY: ' + this.scrollY);
       });
     },
+
     // 计算右侧各区间高度
     _calculateHeight() {
       let itemList = this.$refs.foodsWrapper.getElementsByClassName(
@@ -136,6 +138,7 @@ export default {
           !heightEnd ||
           (this.scrollY >= heightStart && this.scrollY < heightEnd)
         ) {
+          // console.log('this.scrollY: ' + this.scrollY);
           return i;
         }
       }

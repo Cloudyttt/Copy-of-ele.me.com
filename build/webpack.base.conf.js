@@ -7,10 +7,11 @@ var webpack = require("webpack");
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
+const vuxLoader = require('vux-loader')
+// const webpackConfig = originalConfig
 
 
-
-module.exports = {
+const webpackConfig = {
   context: path.resolve(__dirname, "../"),
   entry: {
     app: "./src/main.js"
@@ -24,7 +25,8 @@ module.exports = {
         : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: [".js", ".vue", ".json"],
+    extensions: [".js", ".vue", ".less", ".json"],
+
     alias: {
       vue$: "vue/dist/vue.esm.js",
       "@": resolve("src"),
@@ -98,3 +100,6 @@ module.exports = {
     child_process: "empty"
   }
 };
+module.exports = vuxLoader.merge(webpackConfig, {
+  plugins: ['vux-ui']
+})

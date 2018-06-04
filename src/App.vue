@@ -1,9 +1,7 @@
 <template>
   <div id="app">
+    <!-- <tabbar></tabbar> -->
     <div class="tab">
-        <!-- 使用 router-link 组件来导航.
-        通过传入 `to` 属性指定链接.
-        <router-link> 默认会被渲染成一个 `<a>` 标签 -->
       <div class="tab-item col-sm-3">
         <router-link active-class="active-style" to="/takeaway">
           <div class="tab-route">
@@ -15,7 +13,7 @@
         </router-link>
       </div>
       <div class="tab-item col-sm-3">
-        <router-link active-class="active-style" to="/store">
+        <router-link active-class="active-style" to="/discover">
           <div class="tab-route" >
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-faxian"></use>
@@ -52,6 +50,7 @@
 <script>
 // import header from './components/header/header.vue'
 import store from "./components/store/store.vue";
+// import tabbar from './components/tabbar/tabbar.vue';
 export default {
   data() {
     return {
@@ -74,7 +73,8 @@ export default {
   components: {
     name: "App",
     // 'v-header': header,
-    "v-store": store
+    "v-store": store,
+    // tabbar: tabbar
   }
 };
 </script>
@@ -85,7 +85,7 @@ a {
   text-decoration: none;
 }
 
-span, p, a, img, span {
+span, p, a, img, {
   margin: 0;
   padding: 0;
 }
@@ -101,20 +101,29 @@ span, p, a, img, span {
   justify-content: space-around;
   box-shadow: 0px -1px 3px #dddddd;
   -webkit-box-shadow: 0px -1px 3px #dddddd;
+  background-color: #ffffff;
 
   .tab-item {
     text-align: center;
     display: block;
-
     .tab-route {
-      text-align: center;
-
+      display flex
+      flex-direction column
+      line-height 18px
+      padding-top 5px
       .tab-title {
+        // position absolute
         display: block;
+        margin: 0;
+        padding: 0;
+        width 28px
+        height 18px
+        font-size 11px;
       }
 
       .icon {
-        display: inline-block;
+        float top
+        display: block;
         width: 1.8em;
         height: 1.8em;
         vertical-align: -0.15em;
