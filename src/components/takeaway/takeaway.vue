@@ -1,5 +1,6 @@
 <template>
   <div class="takeaway">
+    <!-- <router-view></router-view> -->
     <div class="wrapper" ref="takeawayWrapper">
       <div class="content">
         <!-- 顶部地址、搜素栏 -->
@@ -46,6 +47,50 @@
             </el-carousel-item>
           </el-carousel>
         </div> 
+        <!-- 大图推荐 -->
+        <div class="main-recommend">
+          <el-row :gutter="20" class="main-recommend-row">
+            <el-col class="main-recommend-col first-row" :span="12">
+              <div class="main-recommend-message message-first">
+                <span class="message-title">限量抢购</span>
+                <span class="message-info">美食午餐 9.9元起</span>
+                <span class="message-other">2485人正在抢购></span>
+              </div>
+              <img class="main-recommend-image1" :src="mainRecommendImg[0].imgAddress" alt="">
+            </el-col>
+            <el-col class="main-recommend-col first-row" :span="12">
+              <div class="main-recommend-message message-first">
+                <span class="message-title">周五半价日</span>
+                <span class="message-info">满30减15起</span>
+                <span class="message-other">立即抢购></span>
+              </div>
+              <img class="main-recommend-image1" :src="mainRecommendImg[1].imgAddress" alt="">
+            </el-col>
+          </el-row>
+          <el-row :gutter="20" class="main-recommend-row">
+            <el-col class="main-recommend-col subordinate-row" :span="8">
+              <div class="main-recommend-message">
+                <span class="message-title-2">生鲜晚市</span>
+                <span class="message-info-2">1元优惠开市</span>
+              </div>
+              <img class="main-recommend-image2" :src="mainRecommendImg[2].imgAddress" alt="">              
+            </el-col>
+            <el-col class="main-recommend-col subordinate-row" :span="8">
+              <div class="main-recommend-message">
+                <span class="message-title-2">品质联盟</span>
+                <span class="message-info-2">品质升级</span>
+              </div>
+              <img class="main-recommend-image2" :src="mainRecommendImg[3].imgAddress" alt="">              
+            </el-col>
+            <el-col class="main-recommend-col subordinate-row" :span="8">
+              <div class="main-recommend-message">
+                <span class="message-title-2">人气简餐</span>
+                <span class="message-info-2">大牌必吃</span>
+              </div>
+              <img class="main-recommend-image2" :src="mainRecommendImg[4].imgAddress" alt="">              
+            </el-col>
+          </el-row>
+        </div>
         <!-- 品质优选推荐 -->
         <div class="special-select">
           <div class="top-title row">
@@ -78,8 +123,8 @@
           </div>
           <div class="sellers-list">
             <ul>
-              <router-link to="/store">
-                <li v-for="list in 5" v-bind:key="list">
+              <li v-for="list in 10" v-bind:key="list">
+                <router-link to="/store"> <!-- 商家列表路由，路由到制定store组件 -->
                   <div class="seller-info">
                     <div class="seller-avatar">
                       <img width="57" height="57" v-bind:src="sellers.avatar">
@@ -87,7 +132,7 @@
                     <div class="seller-content">
                       <div class="seller-name">
                         {{sellers.name}}
-                        <div class="dislike">...</div>
+                        <div class="dislike" v-on:click="showAllSupports()">...</div>
                       </div>
                       <ul class="seller-detail">
                         <li class="seller-score">
@@ -104,14 +149,16 @@
                           </span>
                         </li>
                         <li class="category">
-                          <!-- <i class="el-icon-bell"></i> -->
+                          <i class="el-icon-bell"></i>
                           {{sellers.category}}
                         </li>
                         <li class="seller-support">
                           <div v-if="sellers.supports" class="supports">
                             <icon v-bind:iconSize="12" v-bind:supportsType="sellers.supports[0].type"></icon>
                             <span class="text">{{sellers.supports[0].description}}</span>
-                            <span class="support-show glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+                            <span class="support-showall" v-on:click="showAllSupports()">
+                              <i class="el-icon-arrow-down"></i>
+                            </span>
                           </div>
                           <div v-if="sellers.supports" class="supports">
                             <icon v-bind:iconSize="12" v-bind:supportsType="sellers.supports[1].type"></icon>
@@ -121,8 +168,8 @@
                       </ul>
                     </div>
                   </div>
-                </li>
-              </router-link>
+                </router-link>
+              </li>
               <!-- <router-view></router-view> -->
             </ul>
           </div>
@@ -135,12 +182,14 @@
 import BScroll from "better-scroll";
 import star from "../star/star.vue";
 import icon from "../icon/icon.vue";
+import store from "../store/store.vue";
 export default {
   data() {
     return {
       sellers: {},
       searchBarHeight: 50,
       scrollY: 0,
+      isShowAllSupports: true,
       hotitems: [
         "酸菜鱼",
         "奶茶",
@@ -151,6 +200,23 @@ export default {
         "鸡排",
         "炒面",
         "冷面"
+      ],
+      mainRecommendImg: [
+        {
+          imgAddress: "../../../static/image/recommendImages/food1.png"
+        },
+        {
+          imgAddress: "../../../static/image/recommendImages/food2.png"
+        },
+        {
+          imgAddress: "../../../static/image/recommendImages/food3.png"
+        },
+        {
+          imgAddress: "../../../static/image/recommendImages/food4.png"
+        },
+        {
+          imgAddress: "../../../static/image/recommendImages/food5.png"
+        }
       ],
       categories: [
         {
@@ -226,7 +292,8 @@ export default {
   },
   components: {
     star: star,
-    icon: icon
+    icon: icon,
+    store: store
   },
   created: function() {
     this.$axios
@@ -237,7 +304,8 @@ export default {
         console.log(this.sellers.name);
         console.log("succeed!");
 
-        this.$refs.content.style.minHeight = this.$refs.wrapper.offsetHeight + 1 + "px";
+        this.$refs.content.style.minHeight =
+          this.$refs.wrapper.offsetHeight + 1 + "px";
         this.$nextTick(() => {
           this._initScroll();
         });
@@ -260,6 +328,12 @@ export default {
     },
     chooseSeller() {
       console.log("this.scrollY: " + this.scrollY);
+    },
+    showAllSupports() {
+      // 点击显示当前商店所有优惠和特价信息
+    },
+    dislikeSeller() {
+      // 点击将提供按钮，用户可将当前商家设置为不喜欢，商家移动至列表最后
     }
   },
   mounted() {}
@@ -280,14 +354,14 @@ ul, ol, li {
   width: 100%;
   // bottom: 48px;
   overflow: hidden;
-  .wrapper
-  {
+
+  .wrapper {
     // position: absolute;
     // top: 0px
     // bottom: 0px
     // height: 50%;
     // overflow: hidden;
-    .content{
+    .content {
       // height 100%
       .search-wrapper {
         display: flex;
@@ -390,6 +464,119 @@ ul, ol, li {
               // vertical-align: middle;
               // text-align: center;
               display: inline-block;
+            }
+          }
+        }
+      }
+      .advertisement{
+        // background-color #ffffff
+        margin-bottom 10px
+        padding 0 10px
+      }
+      .main-recommend {
+        .main-recommend-row {
+          // margin-top: 10px;
+          margin-left: 10px;
+          margin-right: 5px;
+          background-color: #f3f5f7;
+          padding-left 20px;
+          padding-right 20px
+          .main-recommend-col {
+            position relative
+            background-color: #eeeeee;
+            padding: 10px 10px 10px 10px;
+            .main-recommend-message {
+              display flex
+              flex-direction column
+              margin-bottom: 5px;
+
+              .message-title {
+                display: inline-block;
+                margin-bottom 5px
+                font-size: 14px;
+                color: red;
+                font-weight: bold;
+              }
+
+              .message-info {
+                display: inline-block;
+                margin-bottom 5px
+                font-weight: 300;
+                font-size: 10px;
+              }
+
+              .message-other {
+                display: inline-block;
+                // margin-bottom 5px
+                font-size: 10px;
+                font-weight: bold;
+              }
+
+              .message-title-2 {
+                display: inline-block;
+                margin-bottom: 5px;
+                font-size: 14px;
+                color: black;
+                font-weight: bold;
+              }
+
+              .message-info-2 {
+                display: inline-block;
+                // margin-bottom 5px
+                font-weight: 300;
+                font-size: 10px;
+                border-radius: 1px;
+                color: #666666;
+                border: 1px solid #666666;
+              }
+            }
+            .message-first{
+              align-self: flex-start
+              padding-left 20px
+            }
+            .main-recommend-image1 {
+              // position absolute
+              position relative
+              float right
+              float: right bottom;
+              height: 75px;
+              width: 75px;
+              align-self: flex-end
+              margin-right 30px;
+            }
+
+            .main-recommend-image2 {
+              // position absolute
+              bottom: 0;
+              right: 0;
+              height: 60px;
+              width: 60px;
+            }
+          }
+
+          .first-row {
+            display: flex;
+            flex-direction: column;
+            padding: 10px 10px 0px 10px;
+            // justify-content center
+            align-content: center;
+            align-items: center;
+            margin-bottom 5px;
+          }
+
+          .subordinate-row {
+            display: flex;
+            flex-direction: column;
+            // justify-content center
+            align-content: center;
+            align-items: center;
+
+            .main-recommend-message {
+              display: flex;
+              flex-direction: column;
+              // justify-content center
+              align-content: center;
+              align-items: center;
             }
           }
         }
@@ -524,6 +711,7 @@ ul, ol, li {
 
           ul, li {
             width: 100%;
+            color: #666666;
           }
 
           ul {
@@ -563,8 +751,9 @@ ul, ol, li {
           }
 
           .seller-detail {
+            // margin-bottom: 5px;
             .seller-score {
-              // margin-bottom 5px;
+              margin-bottom: 5px;
               position: relative;
 
               .star {
@@ -576,7 +765,7 @@ ul, ol, li {
                 color: #ffffff;
                 background-color: rgb(0, 160, 240);
                 border-radius: 2px;
-                padding: 2px 3px 2px 3px;
+                padding: 0px 2px 0px 2px;
               }
             }
 
@@ -585,8 +774,14 @@ ul, ol, li {
               position: relative;
 
               .delivery-discount {
-                float: right;
+                position: absolute;
+                // float: right;
+                right: 0;
               }
+            }
+
+            .category {
+              margin-bottom: 5px;
             }
 
             .seller-support {
@@ -605,6 +800,12 @@ ul, ol, li {
                 .support-show {
                   float: right;
                 }
+
+                .support-showall {
+                  position: absolute;
+                  // float: right;
+                  right: 0;
+                }
               }
             }
           }
@@ -612,7 +813,6 @@ ul, ol, li {
       }
     }
   }
-
 
   .el-carousel__item h3 {
     color: #475669;

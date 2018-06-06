@@ -16,20 +16,23 @@ export default new Router({
       path: "/takeaway",
       name: 'takeaway',
       component: takeaway,
-      // children: {
-      //   path: "/store",
-      //   component: store,
-      //   children: [{
-      //     path: "/goods",
-      //     component: goods
-      //   }, {
-      //     path: "/ratings",
-      //     component: ratings
-      //   }, {
-      //     path: "/seller",
-      //     component: seller,
-      //   }]
-      // }
+      children: [{
+        path: "/store",
+        name: 'store',
+        component: store,
+        children: [{
+          path: "/goods",
+          component: goods
+        }, {
+          path: "/ratings",
+          name: 'ratings',
+          component: ratings
+        }, {
+          path: "/seller",
+          name: 'seller',          
+          component: seller,
+        }]
+      }]
     }, {
       path: "/discover",
       name: 'discover',

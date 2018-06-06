@@ -43,12 +43,12 @@
         </router-link>
       </div>
     </div>
-    <router-view v-bind:store="store"></router-view>
+    <router-view v-bind:takeaway="takeaway"></router-view>
   </div>
 </template>
 
 <script>
-// import header from './components/header/header.vue'
+import header from './components/takeaway/takeaway'
 import store from "./components/store/store.vue";
 // import tabbar from './components/tabbar/tabbar.vue';
 export default {

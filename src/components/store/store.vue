@@ -40,6 +40,11 @@ export default {
   components: {
     name: "App",
     "v-header": header
+  },
+  props: {
+    sellers: {  //接收父组件takeaway传过来的商家信息
+      type: Object
+    }
   }
 };
 </script>
