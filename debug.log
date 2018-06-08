@@ -5,3 +5,5 @@
 [0501/175154.421:ERROR:process_reader_win.cc(242)] ReadMemory at 0x20fd6544350 of 72 bytes failed: 仅完成部分的 ReadProcessMemory 或 WriteProcessMemory 请求。 (0x12B)
 [0501/175154.437:WARNING:pe_image_annotations_reader.cc(133)] could not read annotations list object in C:\Program Files (x86)\Google\Chrome\Application\66.0.3359.139\chrome_child.dll
 [0501/175400.652:ERROR:http_transport_win.cc(273)] WinHttpSendRequest: 操作超时 (0x2ee2)
+[0608/094055.298:WARNING:minidump_to_upload_parameters.cc(66)] duplicate annotation name metrics_client_id, discarding value f9936ac8a0034c039eaef7b6b999ed54
+[0608/094055.457:ERROR:http_transport_win.cc(273)] WinHttpSendRequest: 无法解析服务器的名称或地址 (0x2ee7)

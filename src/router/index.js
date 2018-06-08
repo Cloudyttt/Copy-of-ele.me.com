@@ -13,38 +13,37 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
-      path: "/takeaway",
-      name: 'takeaway',
-      component: takeaway,
-      children: [{
-        path: "/store",
-        name: 'store',
-        component: store,
-        children: [{
-          path: "/goods",
-          component: goods
-        }, {
-          path: "/ratings",
-          name: 'ratings',
-          component: ratings
-        }, {
-          path: "/seller",
-          name: 'seller',          
-          component: seller,
-        }]
-      }]
+    path: "/takeaway",
+    name: 'takeaway',
+    component: takeaway,
+  }, {
+    path: "/discover",
+    name: 'discover',
+    component: discover
+  }, {
+    path: "/order",
+    name: 'order',
+    component: order,
+  }, {
+    path: "/user",
+    name: 'user',
+    component: user,
+  }, {
+    path: "/store",
+    name: 'store',
+    component: store,
+    children: [{
+      path: "/goods",
+      component: goods
     }, {
-      path: "/discover",
-      name: 'discover',
-      component: discover
+      path: "/ratings",
+      name: 'ratings',
+      component: ratings
     }, {
-      path: "/order",
-      name: 'order',
-      component: order,
-    }, {
-      path: "/user",
-      name: 'user',
-      component: user,
-    }
-  ]
+      path: "/seller",
+      name: 'seller',
+      component: seller,
+    }]
+  }
+]
 })

@@ -170,7 +170,7 @@
                   </div>
                 </router-link>
               </li>
-              <!-- <router-view></router-view> -->
+              <router-view></router-view>
             </ul>
           </div>
         </div>
