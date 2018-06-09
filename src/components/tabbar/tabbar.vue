@@ -54,17 +54,17 @@ export default {
       takeaway: {}
     };
   },
-  created: function() {
-    this.$axios
-      .get("/api/seller", { id: 123 })
-      .then(res => {
-        this.seller = res.data.data;
-        console.log("this.seller: " + this.seller);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  },
+  // created: function() {
+  //   this.$axios
+  //     .get("/api/seller", { id: 123 })
+  //     .then(res => {
+  //       this.seller = res.data.data;
+  //       // console.log("this.seller: " + this.seller);
+  //     })
+  //     .catch(function(error) {
+  //       console.log(error);
+  //     });
+  // },
   components: {
     name: "App",
     // 'v-header': header,

@@ -37,13 +37,17 @@ export default new Router({
     name: 'store',
     component: store,
     children: [{
+      // /:goodsdata
       path: "/goods",
+      name: 'goods',
       component: goods
     }, {
+      // /:ratingsdata
       path: "/ratings",
       name: 'ratings',
       component: ratings
     }, {
+      // /:sellerdata
       path: "/seller",
       name: 'seller',
       component: seller,

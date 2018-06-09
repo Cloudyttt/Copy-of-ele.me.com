@@ -123,7 +123,10 @@
           <div class="sellers-list">
             <ul>
               <li v-for="list in 10" v-bind:key="list">
-                <router-link to="/store/sellersData"> <!-- 商家列表路由，路由到制定store组件 -->
+                <router-link :to="{
+                  name:'store',
+                  params: { sellersData:sellersData }
+                  }"> <!-- 商家列表路由，路由到制定store组件 -->
                   <div class="seller-info">
                     <div class="seller-avatar">
                       <img width="57" height="57" v-bind:src="sellers.avatar">
@@ -304,10 +307,10 @@ export default {
       .get("/api/all", { id: 123 })
       .then(res => {
         self.sellersData = res.data.data;
-        console.log("res" + res);
-        console.log("res.data" + res.data);
-        console.log("res.data.data" + res.data.data);
-        console.log("res.data.data.seller.name" + res.data.data.seller.name);        
+        // console.log("res" + res);
+        // console.log("res.data" + res.data);
+        // console.log("res.data.data" + res.data.data);
+        // console.log("res.data.data.seller.name" + res.data.data.seller.name);        
       })
       .catch(function(error) {
         console.log(error);

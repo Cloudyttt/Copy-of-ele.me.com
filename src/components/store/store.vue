@@ -33,12 +33,20 @@ export default {
   //   }
   // },
   created: function() {
+    // console.log(this.$route.params.sellersData.seller);
+    // this.sellersData = this.$route.params.sellersData;
+    // console.log(this.sellersData);
+    // this.seller = this.sellersData.seller
+    // console.log(typeof(this.seller));
+    // console.log(this.seller);
+    
+    this.seller = this.$route.params.seller;
     this.$axios
       .get("/api/seller", { id: 123 })
       .then(res => {
         this.seller = res.data.data;
         // console.log("this.seller: " + this.seller);
-        console.log(this.$route.params.data);
+        
         // sellersData = this.$route.params.data;
         // console.log("123" + sellersData);
         
