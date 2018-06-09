@@ -33,6 +33,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   devServer: {
     clientLogLevel: 'warning',
     before(app) {
+      app.get('/api/all', (req, res)=> {
+        res.json({
+          errno: 0,
+          data: appData
+        })
+      }),
       app.get('/api/seller', (req, res) => {
         res.json({
           // 这里是你的json内容

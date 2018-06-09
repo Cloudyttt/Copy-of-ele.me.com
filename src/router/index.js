@@ -13,6 +13,10 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
+    path:'/',
+    redirect: 'takeaway'
+  },
+  {
     path: "/takeaway",
     name: 'takeaway',
     component: takeaway,
@@ -29,7 +33,7 @@ export default new Router({
     name: 'user',
     component: user,
   }, {
-    path: "/store",
+    path: "/store/:data",
     name: 'store',
     component: store,
     children: [{

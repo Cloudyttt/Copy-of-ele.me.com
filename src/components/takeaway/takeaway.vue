@@ -1,6 +1,5 @@
 <template>
   <div class="takeaway">
-    <!-- <router-view></router-view> -->
     <div class="wrapper" ref="takeawayWrapper">
       <div class="content">
         <!-- 顶部地址、搜素栏 -->
@@ -124,7 +123,7 @@
           <div class="sellers-list">
             <ul>
               <li v-for="list in 10" v-bind:key="list">
-                <router-link to="/store"> <!-- 商家列表路由，路由到制定store组件 -->
+                <router-link to="/store/sellersData"> <!-- 商家列表路由，路由到制定store组件 -->
                   <div class="seller-info">
                     <div class="seller-avatar">
                       <img width="57" height="57" v-bind:src="sellers.avatar">
@@ -176,16 +175,19 @@
         </div>
       </div>
     </div>
+    <tabbar></tabbar>
   </div>
 </template>
 <script type="text/ecmascript-6">
 import BScroll from "better-scroll";
-import star from "../star/star.vue";
-import icon from "../icon/icon.vue";
-import store from "../store/store.vue";
+import star from "../star/star";
+import icon from "../icon/icon";
+import store from "../store/store";
+import tabbar from '../tabbar/tabbar'
 export default {
   data() {
     return {
+      sellersData: {},
       sellers: {},
       searchBarHeight: 50,
       scrollY: 0,
@@ -293,21 +295,39 @@ export default {
   components: {
     star: star,
     icon: icon,
-    store: store
+    store: store,
+    tabbar: tabbar
   },
   created: function() {
-    this.$axios
+      let self =  this;
+      self.$axios
+      .get("/api/all", { id: 123 })
+      .then(res => {
+        self.sellersData = res.data.data;
+        console.log("res" + res);
+        console.log("res.data" + res.data);
+        console.log("res.data.data" + res.data.data);
+        console.log("res.data.data.seller.name" + res.data.data.seller.name);        
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+      self.$axios
       .get("/api/seller", { id: 123 })
       .then(res => {
-        this.sellers = res.data.data;
-        console.log("this.sellers in takeaway:" + this.sellers);
-        console.log(this.sellers.name);
-        console.log("succeed!");
-
-        this.$refs.content.style.minHeight =
-          this.$refs.wrapper.offsetHeight + 1 + "px";
-        this.$nextTick(() => {
-          this._initScroll();
+        self.sellers = res.data.data;
+        // this.sellersData.seller=res.data.data;
+        // self.$set(self.sellersData, seller, res.data.data)
+        // console.log(self.sellersData.seller);
+        // console.log("123123" + self.sellersData.seller.name);
+        // console.log(res);
+        // console.log(res.data);
+        // console.log(res.data.data);
+        // console.log(res.data.data.name);        
+        self.$refs.content.style.minHeight =
+          self.$refs.wrapper.offsetHeight + 1 + "px";
+        self.$nextTick(() => {
+          self._initScroll();
         });
       })
       .catch(function(error) {
@@ -317,17 +337,17 @@ export default {
   methods: {
     // 初始化betterScroll
     _initScroll() {
-      this.takeawayScroll = new BScroll(this.$refs.takeawayWrapper, {
+      self.takeawayScroll = new BScroll(self.$refs.takeawayWrapper, {
         click: true,
         probeType: 3 //scroll滚动时实时返回当前滚动位置
       });
-      this.takeawayScroll.on("scroll", pos => {
-        this.scrollY = Math.abs(Math.round(pos.y));
-        console.log("this.scrollY: " + this.scrollY);
+      self.takeawayScroll.on("scroll", pos => {
+        self.scrollY = Math.abs(Math.round(pos.y));
+        console.log("self.scrollY: " + self.scrollY);
       });
     },
     chooseSeller() {
-      console.log("this.scrollY: " + this.scrollY);
+      console.log("self.scrollY: " + self.scrollY);
     },
     showAllSupports() {
       // 点击显示当前商店所有优惠和特价信息
@@ -813,7 +833,10 @@ ul, ol, li {
       }
     }
   }
-
+  // .tabbar{
+  //   position fixed
+  //   bottom 0px
+  // }
   .el-carousel__item h3 {
     color: #475669;
     font-size: 10px;

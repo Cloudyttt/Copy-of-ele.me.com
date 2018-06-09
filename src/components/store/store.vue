@@ -23,15 +23,25 @@ import header from "../header/header.vue";
 export default {
   data() {
     return {
-      seller: {}
+      seller: {},
+      sellersData: {}
     };
   },
+  // props: {
+  //   sellersData: {  //接收父组件takeaway传过来的商家信息
+  //     type: Object
+  //   }
+  // },
   created: function() {
     this.$axios
       .get("/api/seller", { id: 123 })
       .then(res => {
         this.seller = res.data.data;
         // console.log("this.seller: " + this.seller);
+        console.log(this.$route.params.data);
+        // sellersData = this.$route.params.data;
+        // console.log("123" + sellersData);
+        
       })
       .catch(function(error) {
         console.log(error);
@@ -41,11 +51,6 @@ export default {
     name: "App",
     "v-header": header
   },
-  props: {
-    sellers: {  //接收父组件takeaway传过来的商家信息
-      type: Object
-    }
-  }
 };
 </script>
 
