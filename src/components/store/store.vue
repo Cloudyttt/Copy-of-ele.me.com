@@ -33,23 +33,15 @@ export default {
   //   }
   // },
   created: function() {
-    // console.log(this.$route.params.sellersData.seller);
     // this.sellersData = this.$route.params.sellersData;
-    // console.log(this.sellersData);
     // this.seller = this.sellersData.seller
-    // console.log(typeof(this.seller));
-    // console.log(this.seller);
-    
+
     this.seller = this.$route.params.seller;
     this.$axios
       .get("/api/seller", { id: 123 })
       .then(res => {
         this.seller = res.data.data;
         // console.log("this.seller: " + this.seller);
-        
-        // sellersData = this.$route.params.data;
-        // console.log("123" + sellersData);
-        
       })
       .catch(function(error) {
         console.log(error);
@@ -58,7 +50,7 @@ export default {
   components: {
     name: "App",
     "v-header": header
-  },
+  }
 };
 </script>
 
@@ -82,6 +74,7 @@ export default {
     .active-style {
       color: red !important;
       font-weight: bold;
+      text-decoration none
     }
   }
 }

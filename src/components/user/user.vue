@@ -2,7 +2,7 @@
   <div class="user" ref="wrapper">
     <transition name="fade">
       <!-- 初始界面 -->
-      <div v-show="userShow" class="user-show">
+      <div v-show="userShow" class="user-show" id="user-show">
         <!-- 头 -->
         <div class="uesr-top">
           <div class="uesr-top-left">
@@ -274,12 +274,13 @@
         </div>
       </div>
     </div>
-
+    <tabbar></tabbar>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   // import BScroll from "better-scroll";
+  import tabbar from '../tabbar/tabbar.vue'
   export default{
     data(){
       return{
@@ -305,29 +306,29 @@
         if(!this.isLogin){
           this.str1="";
           this.str2="";
-          this.loginShow=true;
           this.userShow=false;
+          this.loginShow=true;
         }
       },
       showregister: function(){
         this.str3="";
         this.str4="";
         this.str5="";
-        this.registerShow=true;
         this.loginShow=false;
+        this.registerShow=true;
       },
       showsetting: function(){
-        this.settingShow=true;
         this.userShow=false;
+        this.settingShow=true;
       },
       back_to_user: function(){
-        this.userShow=true;
         if(this.loginShow==true){
           this.loginShow=false;
         }
         if(this.settingShow==true){
           this.settingShow=false;
         }
+        this.userShow=true;
       },
       back_to_login: function(){
         this.str1="";
@@ -351,6 +352,7 @@
               this.loginShow=false;
               this.isLogin=true;
               this.userShow=true;
+              document.getElementById("user-show").style.height="100%";
             }
             else{
               this.info="账号或密码错误";
@@ -400,6 +402,9 @@
         this.isShow=false;
       }
     },
+    components: {
+      tabbar: tabbar
+    }
     // mounted(){
     // this.$nextTick(() => {
     //     let bscrollDom = this.$refs.bscroll;
@@ -427,6 +432,9 @@
   }
 
   /* 用户界面 */
+  .user-show{
+    height: 100vh;
+  }
   .uesr-top{
     position: fixed;
     height: 54px;
@@ -457,7 +465,7 @@
     /* background:linear-gradient(left, rgb(1, 170, 255), rgb(1, 134, 255)); */
     /* padding: 30px 15px 0 15px; */
     display: flex;
-    margin-top: 54px;
+    margin-top: 52px;
   }
   .login-icon{
     background:linear-gradient(left, rgb(15, 171, 255), rgb(3, 162, 255));
@@ -512,12 +520,14 @@
     margin: 0 0 4px 2px;
   }
   .assortment{
+    width: 100vw;
     margin-top: 10px;
     border: 1px solid rgb(240, 240, 240);
     border-bottom: 0;
     background-color: white;
   }
   .assortment-item{
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -537,12 +547,14 @@
     font-weight: normal;
     color: rgb(156, 156, 156);
   }
-  .assortment-item img{
+  .assortment-item-left img{
     margin-right: 13px;
     height: 21px;
     width: 21px;
   }
-  
+  .assortment-item-right img{
+    margin-right: 13px;
+  }
   
   /* 登陆界面  注册界面 设置界面*/
   .register-show, .login-show, .setting-show{
@@ -704,11 +716,9 @@
     transition: 0.2s;
   }
   .fade-enter, .fade-leave-to{
-    /* width: 0; */
     margin-left: -100vw;
   }
   .fade-enter-to, .fade-leave{
-    /* width: 100%; */
     margin-left: 0;
   }
 
@@ -721,7 +731,8 @@
     border-right: 1px solid rgb(240, 240, 240);
   }
   .font21{
-    font-size: 21px;
+    font-size: 18px;
+    font-weight: 700px;
   }
   .font14{
     font-size: 13px;
